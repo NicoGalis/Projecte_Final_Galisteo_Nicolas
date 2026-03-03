@@ -36,6 +36,11 @@ public class FighterRunState : FighterBaseState
             SwitchState(factory.LightCombo());
             return;
         }
+        if (ctx.heavyPressed)
+        {
+            SwitchState(factory.HeavyCombo());
+            return;
+        }
 
     }
 

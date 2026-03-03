@@ -1,17 +1,25 @@
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FighterHealth : MonoBehaviour
 {
-    public FighterBasicData basicData;   // ScriptableObject con la vida máxima
-    public Image healthFill;             // Relleno de la barra de vida
+    public FighterBasicData basicData;
+    public Image healthFill;
 
     public float currentHealth;
+    public GameManager gm;
+
+    FighterStateMachine fsm;   
 
     void Start()
     {
+        gm = FindAnyObjectByType<GameManager>();
+
         currentHealth = basicData.Health;
         UpdateHealthBar();
+
+        fsm = GetComponent<FighterStateMachine>(); 
     }
 
     public void TakeDamage(float amount)
@@ -22,9 +30,19 @@ public class FighterHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Debug.Log(name + " ha sido derrotado");
-            // Aquí puedes poner animación de KO, freeze, etc.
+            gm.PlayerDied(this);
         }
+
+        else
+        {
+            if (fsm != null)
+                fsm.GotHit();
+        }
+    }
+    public void ResetHealth()
+    {
+        currentHealth = basicData.Health;
+        UpdateHealthBar();
     }
 
     void UpdateHealthBar()
@@ -35,5 +53,4 @@ public class FighterHealth : MonoBehaviour
             healthFill.transform.localScale = new Vector3(ratio, 1f, 1f);
         }
     }
-
 }

@@ -283,7 +283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255674835}
   - component: {fileID: 255674836}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Facing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 256847805}
   - component: {fileID: 256847809}
   - component: {fileID: 256847810}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 2
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c567ccd7e0a2ecf4ca245ee71393e57e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -547,6 +547,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdaaef201eb9d524faeeca8620915a93, type: 2}
   - {fileID: 11400000, guid: 803b1fffee814eb469c5d59e567810c2, type: 2}
   - {fileID: 11400000, guid: 931b278fbda029442ba101697848acb2, type: 2}
+  heavyComboAttacks:
+  - {fileID: 11400000, guid: ed55a222cb32c7e4eb19987d3da9236e, type: 2}
+  - {fileID: 11400000, guid: e403d93bbb561174bbaeecf25afff266, type: 2}
+  - {fileID: 11400000, guid: 1f9add1785c30f64c8ad64157b07aad0, type: 2}
   dashDirection: 0
   lastForwardTap: 0
   lastBackTap: 0
@@ -558,7 +562,7 @@ MonoBehaviour:
   facingRight: 1
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 256
 --- !u!114 &256847810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +578,7 @@ MonoBehaviour:
   basicData: {fileID: 11400000, guid: 0eeeee9f54aa39e4b9d07aac924050c8, type: 2}
   healthFill: {fileID: 1441203902}
   currentHealth: 100
+  gm: {fileID: 0}
 --- !u!1 &312714040
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,7 +744,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 390439923}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -965,7 +970,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1136193075}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -997,7 +1002,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1403541758}
   - component: {fileID: 1403541759}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Facing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1239,7 +1244,7 @@ GameObject:
   - component: {fileID: 1563547449}
   - component: {fileID: 1563547448}
   - component: {fileID: 1563547447}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Player (1)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1261,6 +1266,7 @@ MonoBehaviour:
   basicData: {fileID: 11400000, guid: 0eeeee9f54aa39e4b9d07aac924050c8, type: 2}
   healthFill: {fileID: 30712730}
   currentHealth: 100
+  gm: {fileID: 0}
 --- !u!114 &1563547448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,6 +1297,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdaaef201eb9d524faeeca8620915a93, type: 2}
   - {fileID: 11400000, guid: 803b1fffee814eb469c5d59e567810c2, type: 2}
   - {fileID: 11400000, guid: 931b278fbda029442ba101697848acb2, type: 2}
+  heavyComboAttacks: []
   dashDirection: 0
   lastForwardTap: 0
   lastBackTap: 0
@@ -1302,7 +1309,7 @@ MonoBehaviour:
   facingRight: 1
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 128
 --- !u!50 &1563547449
 Rigidbody2D:
   serializedVersion: 5
@@ -1319,7 +1326,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 2
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c567ccd7e0a2ecf4ca245ee71393e57e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1437,6 +1444,54 @@ Transform:
   m_Children:
   - {fileID: 390439923}
   - {fileID: 255674835}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1600760143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1600760145}
+  - component: {fileID: 1600760144}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1600760144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600760143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af1db4e4f7d4474998420899889b4f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  p1Wins: 0
+  p2Wins: 0
+  player1: {fileID: 256847810}
+  player2: {fileID: 1563547447}
+--- !u!4 &1600760145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600760143}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.4892907, y: -2.9450436, z: -0.0713244}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1626691854
@@ -1661,3 +1716,4 @@ SceneRoots:
   - {fileID: 358133505}
   - {fileID: 860256777}
   - {fileID: 43263313}
+  - {fileID: 1600760145}

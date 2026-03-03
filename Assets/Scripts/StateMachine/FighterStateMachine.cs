@@ -8,6 +8,13 @@ public class FighterStateMachine : MonoBehaviour
 
     public bool isDummy = false;
 
+    enum FacingDirection
+    {
+        Left = -1,
+        Right = 1,
+        Neutral = 0
+    }
+
 
     public Transform groundCheck;
     public float groundCheckRadius;
@@ -23,6 +30,8 @@ public class FighterStateMachine : MonoBehaviour
     [HideInInspector] public bool heavyPressed;
 
     public AttackData[] lightComboAttacks;
+    public AttackData[] heavyComboAttacks;
+
 
 
     [HideInInspector] public int dashDirection; // +1 forward, -1 back
@@ -57,17 +66,19 @@ public class FighterStateMachine : MonoBehaviour
         CurrentState.EnterState();
     }
 
+    public void GotHit() 
+    { 
+        CurrentState.SwitchState(states.Hit()); 
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        // SIEMPRE mirar al enemigo (player y dummy)
         UpdateFacing();
 
-        // SIEMPRE comprobar si est� en el suelo
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // El dummy NO lee inputs ni se mueve
         if (!isDummy)
         {
             horizontalInput = Input.GetAxis("Horizontal");
@@ -77,29 +88,29 @@ public class FighterStateMachine : MonoBehaviour
             lightPressed = Input.GetKeyDown(KeyCode.J);
             heavyPressed = Input.GetKeyDown(KeyCode.K);
 
-            int inputDir = 0;
+            FacingDirection inputDir = FacingDirection.Neutral;
 
             if (Input.GetKeyDown(KeyCode.D))
-                inputDir = 1;
+                inputDir = FacingDirection.Right;
 
             if (Input.GetKeyDown(KeyCode.A))
-                inputDir = -1;
+                inputDir = FacingDirection.Left;
 
             bool isForward = false;
             bool isBack = false;
 
-            if (inputDir != 0)
+            if (inputDir != FacingDirection.Neutral)
             {
                 if (facingRight)
                 {
-                    if (inputDir == 1)
+                    if (inputDir.Equals( FacingDirection.Right))
                         isForward = true;
                     else
                         isBack = true;
                 }
                 else
                 {
-                    if (inputDir == -1)
+                    if (inputDir.Equals (FacingDirection.Left))
                         isForward = true;
                     else
                         isBack = true;
@@ -128,11 +139,9 @@ public class FighterStateMachine : MonoBehaviour
         }
         else
         {
-            // Dummy NO se mueve
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         }
 
-        // La StateMachine SIEMPRE se actualiza
         CurrentState.UpdateState();
     }
 
@@ -156,13 +165,30 @@ public class FighterStateMachine : MonoBehaviour
         if (CurrentState == null)
             return;
 
-        // �Estamos en el combo flojo?
         if (CurrentState is FighterLightComboState light)
         {
             AttackData atk = light.GetCurrentAttack();
             float t = light.GetTimer();
 
-            // Solo dibujar durante los frames activos
+            float activeStart = atk.startup;
+            float activeEnd = atk.startup + atk.active;
+
+            if (t < activeStart || t > activeEnd)
+                return;
+
+            float dir = facingRight ? 1f : -1f;
+
+            Vector2 center = (Vector2)transform.position +
+                             new Vector2(atk.hitboxOffset.x * dir, atk.hitboxOffset.y);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(center, atk.hitboxSize);
+        }
+        if (CurrentState is FighterHeavyComboState heavy)
+        {
+            AttackData atk = heavy.GetCurrentAttack();
+            float t = heavy.GetTimer();
+
             float activeStart = atk.startup;
             float activeEnd = atk.startup + atk.active;
 

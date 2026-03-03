@@ -16,6 +16,8 @@ public class FighterStateFactory
     public FighterBaseState Land() => new FighterLandState(ctx, this);
     public FighterBaseState Dash() => new FighterDashState(ctx, this);
     public FighterBaseState LightCombo() => new FighterLightComboState(ctx, this);
+    public FighterBaseState HeavyCombo() => new FighterHeavyComboState(ctx, this);
+    public FighterHitState Hit() => new FighterHitState(ctx, this);
 
 
 

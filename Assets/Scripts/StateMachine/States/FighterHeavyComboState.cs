@@ -1,27 +1,24 @@
 using UnityEngine;
 
-public class FighterLightComboState : FighterBaseState
+public class FighterHeavyComboState : FighterBaseState
 {
-    // Lista de ataques (Light1, Light2, Light3)
     public AttackData[] attacks;
 
-    private int step;        // 0 = primer golpe, 1 = segundo, 2 = tercero
-    private float timer;     // tiempo dentro del golpe actual
-    private bool hitDone;    // para no golpear dos veces en el mismo golpe
+    private int step;        
+    private float timer;     
+    private bool hitDone;
 
-
-    public FighterLightComboState(FighterStateMachine ctx, FighterStateFactory factory)
-        : base(ctx, factory) { }
+    public FighterHeavyComboState(FighterStateMachine ctx, FighterStateFactory factory)
+       : base(ctx, factory) { }
 
     public override void EnterState()
     {
         ctx.rb.linearVelocity = new Vector2(0f, ctx.rb.linearVelocity.y);
 
-        attacks = ctx.lightComboAttacks;
+        attacks = ctx.heavyComboAttacks;
         step = 0;
         timer = 0f;
         hitDone = false;
-        // Aquí podrías reproducir animación:
         // ctx.animator.Play(attacks[step].animationName);
     }
 
@@ -34,16 +31,16 @@ public class FighterLightComboState : FighterBaseState
         float totalDuration = atk.startup + atk.active + atk.recovery;
         float activeStart = atk.startup;
         float activeEnd = atk.startup + atk.active;
-
-        if (!hitDone && timer >= activeStart && timer <= activeEnd)
+        if (timer >= activeStart && timer <= activeEnd)
         {
-            DoHitbox(atk);
-            hitDone = true;
+            if (!hitDone)
+                DoHitbox(atk);
         }
 
-        if (step < attacks.Length - 1) //si no es l ultim cop
+
+        if (step < attacks.Length - 1) 
         {
-            if (ctx.lightPressed &&
+            if (ctx.heavyPressed &&
                 timer >= atk.cancelStart &&
                 timer <= atk.cancelEnd)
             {
@@ -67,7 +64,7 @@ public class FighterLightComboState : FighterBaseState
         timer = 0f;
         hitDone = false;
 
-       
+
         // ctx.animator.Play(attacks[step].animationName);
     }
 
@@ -89,6 +86,7 @@ public class FighterLightComboState : FighterBaseState
                 hitDone = true;
             }
 
+             Debug.Log("Golpe Heavy a: " + h.name);
         }
 
     }
@@ -106,5 +104,4 @@ public class FighterLightComboState : FighterBaseState
     {
         return timer;
     }
-
 }

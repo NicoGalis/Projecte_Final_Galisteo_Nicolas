@@ -41,6 +41,12 @@ public class FighterIdleState : FighterBaseState
             return;
         }
 
+        if (ctx.heavyPressed)
+        {
+            SwitchState(factory.HeavyCombo());
+            return;
+        }
+
 
     }
 
