@@ -1,13 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FighterRunState : FighterBaseState
 {
-
+    bool isRunning;
     public FighterRunState(FighterStateMachine ctx, FighterStateFactory factory) : base(ctx, factory) { }
     public override void EnterState()
     {
+        isRunning = true;
     }
-
     public override void UpdateState()
     {
 
@@ -30,6 +31,9 @@ public class FighterRunState : FighterBaseState
         }
         Vector2 move = new Vector2(ctx.horizontalInput * ctx.basicMovementDatas.speed, ctx.rb.linearVelocity.y);
         ctx.rb.linearVelocity = move;
+        
+        ctx.animator.SetBool("isRunning", isRunning);
+
 
         if (ctx.lightPressed)
         {
@@ -46,6 +50,8 @@ public class FighterRunState : FighterBaseState
 
     public override void ExitState()
     {
+        isRunning = false;
+        ctx.animator.SetBool("isRunning", isRunning);
     }
 
 

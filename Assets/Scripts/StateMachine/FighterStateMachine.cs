@@ -8,6 +8,9 @@ public class FighterStateMachine : MonoBehaviour
 
     public bool isDummy = false;
 
+    public Animator animator;
+
+
     enum FacingDirection
     {
         Left = -1,
@@ -56,6 +59,7 @@ public class FighterStateMachine : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         states = new FighterStateFactory(this);
     }
 

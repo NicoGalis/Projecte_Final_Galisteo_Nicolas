@@ -6,6 +6,7 @@ public class FighterIdleState : FighterBaseState
 
     public override void EnterState()
     {
+        
     }
 
     public override void UpdateState()
