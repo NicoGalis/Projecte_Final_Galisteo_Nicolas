@@ -21,11 +21,18 @@ public class FightSetup : MonoBehaviour
         int p1Index = PlayerPrefs.GetInt("P1Character");
         int p2Index = PlayerPrefs.GetInt("P2Character");
 
+        int p1ID = PlayerPrefs.GetInt("P1CharacterID"); //id real de la bdd
+        int p2ID = PlayerPrefs.GetInt("P2CharacterID"); 
+
         GameObject p1 = Instantiate(characters[p1Index], spawnPointP1.position, Quaternion.identity);
         GameObject p2 = Instantiate(characters[p2Index], spawnPointP2.position, Quaternion.identity);
 
         FighterHealth fighterhealth1 = p1.GetComponent<FighterHealth>();
         FighterHealth fighterhealth2 = p2.GetComponent<FighterHealth>();
+
+        // Asignar ID real del personaje
+        fighterhealth1.characterID = p1ID;
+        fighterhealth2.characterID = p2ID;
 
         gameManager.player1 = fighterhealth1;
         gameManager.player2 = fighterhealth2;

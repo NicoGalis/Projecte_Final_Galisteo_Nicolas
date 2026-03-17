@@ -6,10 +6,13 @@ using TMPro;
 public class CharacterSelectionMenu : MonoBehaviour
 {
     [Header("Character Prefabs")]
-    public GameObject[] characters; 
+    public GameObject[] characters;
 
     [Header("Character Names")]
-    public string[] characterNames; 
+    public string[] characterNames;
+
+    [Header("Character IDs (DB)")]
+    public int[] characterIDs; 
 
     [Header("Displays")]
     public Image imageP1;
@@ -97,8 +100,13 @@ public class CharacterSelectionMenu : MonoBehaviour
 
     public void StartFight()
     {
+        // Guardar índices (para instanciar)
         PlayerPrefs.SetInt("P1Character", indexP1);
         PlayerPrefs.SetInt("P2Character", indexP2);
+
+        // Guardar IDs reales de la base de datos
+        PlayerPrefs.SetInt("P1CharacterID", characterIDs[indexP1]);
+        PlayerPrefs.SetInt("P2CharacterID", characterIDs[indexP2]);
 
         SceneManager.LoadScene("FightScene");
     }

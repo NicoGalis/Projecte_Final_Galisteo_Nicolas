@@ -1,9 +1,14 @@
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+
+
 
 public class GameManager : MonoBehaviour
 {
+
     public int p1Wins = 0;
     public int p2Wins = 0;
     public TextMeshProUGUI WinCounter;
@@ -16,16 +21,27 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied(FighterHealth deadPlayer)
     {
+        FighterHealth winner;
+
         if (deadPlayer == player1)
+        {
             p2Wins++;
+            winner = player2;
+        }
         else
+        {
             p1Wins++;
+            winner = player1;
+        }
+
+        StartCoroutine(AddWin(winner.characterID));
 
         WinCounter.text = p1Wins + " - " + p2Wins;
         Debug.Log("Marcador: P1 = " + p1Wins + " | P2 = " + p2Wins);
 
         ResetRound();
     }
+
 
     void ResetRound()
     {
@@ -67,4 +83,20 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("StartMenu");
     }
+
+    IEnumerator AddWin(int characterId)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("characterId", characterId);
+
+        UnityWebRequest www = UnityWebRequest.Post(
+            "http://elservidor.cat/~elcampalab/campalab/pau/files/nico/AddWin.php",
+            form
+        );
+
+        yield return www.SendWebRequest();
+
+        Debug.Log("Respuesta del servidor: " + www.downloadHandler.text);
+    }
+
 }

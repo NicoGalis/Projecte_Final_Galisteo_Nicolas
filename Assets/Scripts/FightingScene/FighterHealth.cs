@@ -4,13 +4,14 @@ using UnityEngine.UI;
 
 public class FighterHealth : MonoBehaviour
 {
+    public int characterID;  
     public FighterBasicData basicData;
     public Image healthFill;
 
     public float currentHealth;
     public GameManager gm;
 
-    FighterStateMachine fsm;   
+    FighterStateMachine fsm;
 
     void Start()
     {
@@ -19,7 +20,7 @@ public class FighterHealth : MonoBehaviour
         currentHealth = basicData.Health;
         UpdateHealthBar();
 
-        fsm = GetComponent<FighterStateMachine>(); 
+        fsm = GetComponent<FighterStateMachine>();
     }
 
     public void TakeDamage(float amount)
@@ -32,13 +33,13 @@ public class FighterHealth : MonoBehaviour
         {
             gm.PlayerDied(this);
         }
-
         else
         {
             if (fsm != null)
                 fsm.GotHit();
         }
     }
+
     public void ResetHealth()
     {
         currentHealth = basicData.Health;

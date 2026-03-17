@@ -2383,6 +2383,7 @@ MonoBehaviour:
   characterNames:
   - Naruto
   - Sakura
+  characterIDs: 0100000002000000
   imageP1: {fileID: 106291507}
   imageP2: {fileID: 1394035694}
   fighterNameP1: {fileID: 1883974075}
