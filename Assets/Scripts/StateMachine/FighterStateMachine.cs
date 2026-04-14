@@ -35,6 +35,10 @@ public class FighterStateMachine : MonoBehaviour
     public AttackData[] lightComboAttacks;
     public AttackData[] heavyComboAttacks;
 
+    [Header("Dash Cooldown")]
+    public float dashCooldown = 0.4f;
+    [HideInInspector] public float dashCooldownTimer = 0f;
+
 
 
     [HideInInspector] public int dashDirection; // +1 forward, -1 back
@@ -83,6 +87,11 @@ public class FighterStateMachine : MonoBehaviour
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
+        // Reducir cooldown del dash
+        if (dashCooldownTimer > 0)
+            dashCooldownTimer -= Time.deltaTime;
+
+
         if (!isDummy)
         {
             horizontalInput = Input.GetAxis("Horizontal");
@@ -123,7 +132,7 @@ public class FighterStateMachine : MonoBehaviour
 
             if (isForward)
             {
-                if (Time.time - lastForwardTap < doubleTapThreshold)
+                if (Time.time - lastForwardTap < doubleTapThreshold && dashCooldownTimer <= 0f)
                 {
                     dashDirection = +1;
                     CurrentState.SwitchState(states.Dash());
@@ -131,20 +140,64 @@ public class FighterStateMachine : MonoBehaviour
                 lastForwardTap = Time.time;
             }
 
+
             if (isBack)
             {
-                if (Time.time - lastBackTap < doubleTapThreshold)
+                if (Time.time - lastBackTap < doubleTapThreshold && dashCooldownTimer <= 0f)
                 {
                     dashDirection = -1;
                     CurrentState.SwitchState(states.Dash());
                 }
                 lastBackTap = Time.time;
             }
+
         }
         else
         {
+            if (!(CurrentState is FighterBlockState))
+                CurrentState.SwitchState(states.Block());
+
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+
+            CurrentState.UpdateState();
+            return;
         }
+
+        if (Input.GetKey(KeyCode.B) && !isDummy)
+        {
+            FighterHealth healthh = GetComponent<FighterHealth>();
+
+            if (healthh.currentBlock > 0)
+            {
+                if (!(CurrentState is FighterBlockState))
+                    CurrentState.SwitchState(states.Block());
+
+            }
+            else
+            {
+                if (CurrentState is FighterBlockState)
+                    CurrentState.SwitchState(states.Idle());
+            }
+        }
+        else
+        {
+            if (CurrentState is FighterBlockState)
+                CurrentState.SwitchState(states.Idle());
+        }
+        FighterHealth health = GetComponent<FighterHealth>();
+
+        if (Input.GetKey(KeyCode.B) && health.currentBlock > 0 && health.blockCooldownTimer <= 0)
+        {
+            if (!(CurrentState is FighterBlockState))
+                CurrentState.SwitchState(states.Block());
+        }
+        else
+        {
+            if (CurrentState is FighterBlockState)
+                CurrentState.SwitchState(states.Idle());
+        }
+
+
 
         CurrentState.UpdateState();
     }

@@ -332,9 +332,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b12ff079898e946b751c6624a8cbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterID: 0
   basicData: {fileID: 11400000, guid: 0eeeee9f54aa39e4b9d07aac924050c8, type: 2}
   healthFill: {fileID: 0}
+  blockFill: {fileID: 0}
   currentHealth: 100
+  currentBlock: 300
+  blockDrainPerHit: 25
+  blockDrainPerSecond: 20
+  blockRegenPerSecond: 10
   gm: {fileID: 0}
 --- !u!95 &2711367393982331064
 Animator:

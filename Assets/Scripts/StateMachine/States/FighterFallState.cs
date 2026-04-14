@@ -7,6 +7,7 @@ public class FighterFallState : FighterBaseState
 
     public override void EnterState()
     {
+            ctx.animator.SetBool("isFalling", true);
     }
 
     public override void UpdateState()
@@ -31,5 +32,8 @@ public class FighterFallState : FighterBaseState
             SwitchState(factory.Land());
     }
 
-    public override void ExitState() { }
+    public override void ExitState() 
+    { 
+            ctx.animator.SetBool("isFalling", false);
+    }
 }

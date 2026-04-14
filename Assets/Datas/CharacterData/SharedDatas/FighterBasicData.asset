@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FighterBasicData
   m_EditorClassIdentifier: 
   Health: 100
-  Ki: 100
+  Blockmeter: 300

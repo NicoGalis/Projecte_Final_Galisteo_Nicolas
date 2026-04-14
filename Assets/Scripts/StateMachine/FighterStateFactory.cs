@@ -18,6 +18,8 @@ public class FighterStateFactory
     public FighterBaseState LightCombo() => new FighterLightComboState(ctx, this);
     public FighterBaseState HeavyCombo() => new FighterHeavyComboState(ctx, this);
     public FighterHitState Hit() => new FighterHitState(ctx, this);
+    public FighterBaseState Block() => new FighterBlockState(ctx, this);
+
 
 
 

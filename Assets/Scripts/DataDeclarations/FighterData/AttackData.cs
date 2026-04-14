@@ -19,6 +19,9 @@ public class AttackData : ScriptableObject
     [Header("Damage")]
     public int damage = 10;
 
+    [Header("Block Damage")]
+    public float blockDamage = 10f;   // ? NUEVO
+
     [Header("Animation")]
     public string animationName;
 }

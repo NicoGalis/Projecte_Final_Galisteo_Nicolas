@@ -9,6 +9,8 @@ public class FighterJumpState : FighterBaseState
     {
         jumpStartTime = Time.time;
 
+        ctx.animator.SetBool("isJumping", true);
+
         Vector2 v = ctx.rb.linearVelocity;
         v.y = ctx.basicMovementDatas.jumpForce;
         ctx.rb.linearVelocity = v;
@@ -44,5 +46,7 @@ public class FighterJumpState : FighterBaseState
 
     public override void ExitState()
     {
+        ctx.animator.SetBool("isJumping", false);
     }
+
 }

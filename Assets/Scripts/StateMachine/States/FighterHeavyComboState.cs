@@ -82,7 +82,7 @@ public class FighterHeavyComboState : FighterBaseState
             FighterHealth hp = h.GetComponent<FighterHealth>();
             if (hp != null)
             {
-                hp.TakeDamage(atk.damage);
+                hp.TakeDamage(atk);
                 hitDone = true;
             }
 

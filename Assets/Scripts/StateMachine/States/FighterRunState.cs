@@ -34,6 +34,20 @@ public class FighterRunState : FighterBaseState
         
         ctx.animator.SetBool("isRunning", isRunning);
 
+        float speed = ctx.basicMovementDatas.speed;
+
+        bool movingBackwards =
+            (ctx.facingRight && ctx.horizontalInput < 0) ||
+            (!ctx.facingRight && ctx.horizontalInput > 0);
+
+        if (movingBackwards)
+            speed *= 0.3f; 
+
+     move = new Vector2(ctx.horizontalInput * speed, ctx.rb.linearVelocity.y);
+        ctx.rb.linearVelocity = move;
+
+        ctx.animator.SetBool("isRunning", !movingBackwards);
+        ctx.animator.SetBool("isBackwards", movingBackwards);
 
         if (ctx.lightPressed)
         {
@@ -46,12 +60,15 @@ public class FighterRunState : FighterBaseState
             return;
         }
 
+
+
     }
 
     public override void ExitState()
     {
         isRunning = false;
         ctx.animator.SetBool("isRunning", isRunning);
+        ctx.animator.SetBool("isBackwards", false);
     }
 
 

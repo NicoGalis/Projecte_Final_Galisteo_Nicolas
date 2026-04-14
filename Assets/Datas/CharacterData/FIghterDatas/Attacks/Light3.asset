@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Light3
   m_EditorClassIdentifier: 
   startup: 0.05
-  active: 0.12
+  active: 0.4
   recovery: 0.5
   cancelStart: 0.05
   cancelEnd: 0.25
   hitboxSize: {x: 1, y: 1}
   hitboxOffset: {x: 1, y: 0.3}
   damage: 10
+  blockDamage: 5
   animationName: 

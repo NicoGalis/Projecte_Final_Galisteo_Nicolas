@@ -4,5 +4,5 @@ using UnityEngine;
 public class FighterBasicData : ScriptableObject
 {
     public float Health;
-    public float Ki;
+    public float Blockmeter;
 }

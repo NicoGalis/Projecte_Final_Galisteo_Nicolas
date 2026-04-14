@@ -20,4 +20,5 @@ MonoBehaviour:
   hitboxSize: {x: 4, y: 1}
   hitboxOffset: {x: 1.2, y: 0.5}
   damage: 20
+  blockDamage: 30
   animationName: 

@@ -69,5 +69,7 @@ public class FighterDashState : FighterBaseState
 
     public override void ExitState()
     {
+        ctx.dashCooldownTimer = ctx.dashCooldown;
     }
+
 }
