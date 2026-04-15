@@ -9,18 +9,18 @@ public class CharacterSelectionMenu : MonoBehaviour
     public GameObject[] characters;
 
     [Header("Character Names")]
-    public string[] characterNames;
+    public Sprite[] characterNames;
 
     [Header("Character IDs (DB)")]
-    public int[] characterIDs; 
+    public int[] characterIDs;
 
     [Header("Displays")]
     public Image imageP1;
     public Image imageP2;
 
     [Header("Name Displays")]
-    public TextMeshProUGUI fighterNameP1;
-    public TextMeshProUGUI fighterNameP2;
+    public Image fighterNameP1;
+    public Image fighterNameP2;
 
     [Header("Buttons")]
     public Button doneButtonP1;
@@ -44,8 +44,8 @@ public class CharacterSelectionMenu : MonoBehaviour
         imageP1.sprite = characters[indexP1].GetComponent<SpriteRenderer>().sprite;
         imageP2.sprite = characters[indexP2].GetComponent<SpriteRenderer>().sprite;
 
-        fighterNameP1.text = characterNames[indexP1];
-        fighterNameP2.text = characterNames[indexP2];
+        fighterNameP1.sprite = characterNames[indexP1];
+        fighterNameP2.sprite = characterNames[indexP2];
     }
 
     public void P1_Next()

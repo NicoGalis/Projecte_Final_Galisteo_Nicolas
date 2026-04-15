@@ -129,7 +129,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.4, y: 0.5}
+  m_Size: {x: 0.25, y: 0.5}
   m_Direction: 0
 --- !u!50 &7304442457351117329
 Rigidbody2D:
@@ -193,6 +193,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ed55a222cb32c7e4eb19987d3da9236e, type: 2}
   - {fileID: 11400000, guid: e403d93bbb561174bbaeecf25afff266, type: 2}
   - {fileID: 11400000, guid: 1f9add1785c30f64c8ad64157b07aad0, type: 2}
+  dashCooldown: 0.4
+  dashCooldownTimer: 0
   dashDirection: 0
   lastForwardTap: 0
   lastBackTap: 0
@@ -226,6 +228,8 @@ MonoBehaviour:
   blockDrainPerHit: 25
   blockDrainPerSecond: 20
   blockRegenPerSecond: 10
+  blockCooldown: 1.5
+  blockCooldownTimer: 0
   gm: {fileID: 0}
 --- !u!95 &3475226337625289032
 Animator:
