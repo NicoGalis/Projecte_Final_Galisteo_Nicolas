@@ -80,9 +80,10 @@ public class FighterLightComboState : FighterBaseState
 
     private void PlayCurrentLightAnimation()
     {
-        // Seguridad: por si acaso hay menos animaciones que pasos
         int index = Mathf.Clamp(step, 0, lightAnimNames.Length - 1);
-        ctx.animator.Play(lightAnimNames[index], 0, 0f);
+
+        string animName = ctx.animationPrefix + lightAnimNames[index];
+        ctx.animator.Play(animName, 0, 0f);
     }
 
     private void DoHitbox(AttackData atk)
@@ -107,8 +108,10 @@ public class FighterLightComboState : FighterBaseState
 
     public override void ExitState()
     {
-        ctx.animator.Play("narutoIdle", 0, 0f);
+        string idleAnim = ctx.animationPrefix + "Idle";
+        ctx.animator.Play(idleAnim, 0, 0f);
     }
+
 
 
     public AttackData GetCurrentAttack()

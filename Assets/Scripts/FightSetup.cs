@@ -34,6 +34,8 @@ public class FightSetup : MonoBehaviour
         FighterHealth fighterhealth1 = p1.GetComponent<FighterHealth>();
         FighterHealth fighterhealth2 = p2.GetComponent<FighterHealth>();
 
+
+
         // Asignar ID real del personaje
         fighterhealth1.characterID = p1ID;
         fighterhealth2.characterID = p2ID;
@@ -53,6 +55,13 @@ public class FightSetup : MonoBehaviour
         // Configurar enemigos
         FighterStateMachine fsm1 = p1.GetComponent<FighterStateMachine>();
         FighterStateMachine fsm2 = p2.GetComponent<FighterStateMachine>();
+
+        fsm1.isPlayer1 = true;
+        fsm2.isPlayer1 = false;
+
+        fsm1.animationPrefix = characters[p1Index].name.ToLower();
+        fsm2.animationPrefix = characters[p2Index].name.ToLower();
+
 
         fsm1.enemy = p2.transform;
         fsm2.enemy = p1.transform;

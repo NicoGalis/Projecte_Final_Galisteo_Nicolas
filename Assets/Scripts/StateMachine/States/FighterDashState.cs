@@ -12,33 +12,21 @@ public class FighterDashState : FighterBaseState
     {
         timer = ctx.dashDuration;
 
-        if (ctx.airDashUsed == true)
-        {
+        // Activar animación de dash
+        ctx.animator.SetBool("isDashing", true);
+
+        if (ctx.airDashUsed)
             return;
-        }
 
-        dashDir = 1;
-
-        if (ctx.facingRight == true)
-        {
-            dashDir = 1;
-        }
-        else
-        {
-            dashDir = -1;
-        }
+        dashDir = ctx.facingRight ? 1 : -1;
 
         if (ctx.dashDirection == -1)
-        {
-            dashDir = dashDir * -1;
-        }
+            dashDir *= -1;
 
         ctx.rb.linearVelocity = new Vector2(dashDir * ctx.dashSpeed, 0f);
 
-        if (ctx.isGrounded == false)
-        {
+        if (!ctx.isGrounded)
             ctx.airDashUsed = true;
-        }
     }
 
     public override void UpdateState()
@@ -50,17 +38,13 @@ public class FighterDashState : FighterBaseState
         if (timer <= 0f)
         {
             if (ctx.horizontalInput != 0)
-            {
                 SwitchState(factory.Run());
-            }
             else
-            {
                 SwitchState(factory.Idle());
-            }
             return;
         }
 
-        if (ctx.isGrounded == true && ctx.jumpPressed == true)
+        if (ctx.isGrounded && ctx.jumpPressed)
         {
             SwitchState(factory.Jump());
             return;
@@ -69,7 +53,9 @@ public class FighterDashState : FighterBaseState
 
     public override void ExitState()
     {
+        // Desactivar animación de dash
+        ctx.animator.SetBool("isDashing", false);
+
         ctx.dashCooldownTimer = ctx.dashCooldown;
     }
-
 }

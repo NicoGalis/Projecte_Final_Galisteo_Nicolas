@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startup: 0.05
   active: 0.4
-  recovery: 0.5
+  recovery: 0.05
   cancelStart: 0.05
   cancelEnd: 0.25
   hitboxSize: {x: 1, y: 1}

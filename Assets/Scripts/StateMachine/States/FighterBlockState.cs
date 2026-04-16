@@ -7,16 +7,21 @@ public class FighterBlockState : FighterBaseState
 
     public override void EnterState()
     {
-        //ctx.animator.Play("Block"); // tu animación de bloqueo
+        ctx.animator.SetBool("isBlocking", true);
+        ctx.rb.linearVelocity = Vector2.zero;
+        if(ctx.isGrounded!)
+        {
+            
+        }
     }
 
     public override void UpdateState()
     {
-        // La lógica de drenaje está en FighterHealth
+        ctx.rb.linearVelocity = Vector2.zero;
     }
 
     public override void ExitState()
     {
-        // Nada especial
+        ctx.animator.SetBool("isBlocking", false);
     }
 }

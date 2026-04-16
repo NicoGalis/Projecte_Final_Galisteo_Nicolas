@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FighterStateMachine : MonoBehaviour
 {
@@ -8,8 +8,10 @@ public class FighterStateMachine : MonoBehaviour
 
     public bool isDummy = false;
 
-    public Animator animator;
+    public bool isPlayer1 = true; // ← NUEVO
 
+    public Animator animator;
+    public string animationPrefix = "naruto"; // se cambia al instanciar
 
     enum FacingDirection
     {
@@ -17,7 +19,6 @@ public class FighterStateMachine : MonoBehaviour
         Right = 1,
         Neutral = 0
     }
-
 
     public Transform groundCheck;
     public float groundCheckRadius;
@@ -32,6 +33,10 @@ public class FighterStateMachine : MonoBehaviour
     [HideInInspector] public bool lightPressed;
     [HideInInspector] public bool heavyPressed;
 
+    private bool blockPressed;       // ← NUEVO
+    private bool forwardKeyDown;     // ← NUEVO
+    private bool backKeyDown;        // ← NUEVO
+
     public AttackData[] lightComboAttacks;
     public AttackData[] heavyComboAttacks;
 
@@ -39,9 +44,7 @@ public class FighterStateMachine : MonoBehaviour
     public float dashCooldown = 0.4f;
     [HideInInspector] public float dashCooldownTimer = 0f;
 
-
-
-    [HideInInspector] public int dashDirection; // +1 forward, -1 back
+    [HideInInspector] public int dashDirection;
     [HideInInspector] public float lastForwardTap;
     [HideInInspector] public float lastBackTap;
 
@@ -57,9 +60,8 @@ public class FighterStateMachine : MonoBehaviour
 
     public LayerMask enemyLayer;
 
-
-
     private FighterStateFactory states;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -67,46 +69,101 @@ public class FighterStateMachine : MonoBehaviour
         states = new FighterStateFactory(this);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         CurrentState = states.Idle();
         CurrentState.EnterState();
     }
 
-    public void GotHit() 
-    { 
-        CurrentState.SwitchState(states.Hit()); 
+    public void GotHit()
+    {
+        CurrentState.SwitchState(states.Hit());
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         UpdateFacing();
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // Reducir cooldown del dash
         if (dashCooldownTimer > 0)
             dashCooldownTimer -= Time.deltaTime;
 
-
         if (!isDummy)
         {
-            horizontalInput = Input.GetAxis("Horizontal");
-            jumpPressed = Input.GetButtonDown("Jump");
-            fastFallPressed = Input.GetKey(KeyCode.S);
+            // -----------------------------
+            //     INPUTS P1 / P2
+            // -----------------------------
+            if (isPlayer1)
+            {
+                // -------------------------
+                // MOVIMIENTO P1
+                // -------------------------
+                if (Input.GetKey(KeyCode.D))
+                    horizontalInput = 1;
+                else if (Input.GetKey(KeyCode.A))
+                    horizontalInput = -1;
+                else
+                    horizontalInput = 0;
 
-            lightPressed = Input.GetKeyDown(KeyCode.J);
-            heavyPressed = Input.GetKeyDown(KeyCode.K);
+                // SALTO
+                jumpPressed = Input.GetKeyDown(KeyCode.W);
 
+                // FAST FALL
+                fastFallPressed = Input.GetKey(KeyCode.S);
+
+                // ATAQUES
+                lightPressed = Input.GetKeyDown(KeyCode.J);
+                heavyPressed = Input.GetKeyDown(KeyCode.K);
+
+                // BLOQUEO
+                blockPressed = Input.GetKey(KeyCode.B);
+
+                // DASH
+                forwardKeyDown = Input.GetKeyDown(KeyCode.D);
+                backKeyDown = Input.GetKeyDown(KeyCode.A);
+            }
+            else
+            {
+                // -------------------------
+                // MOVIMIENTO P2
+                // -------------------------
+                if (Input.GetKey(KeyCode.RightArrow))
+                    horizontalInput = 1;
+                else if (Input.GetKey(KeyCode.LeftArrow))
+                    horizontalInput = -1;
+                else
+                    horizontalInput = 0;
+
+                // SALTO
+                jumpPressed = Input.GetKeyDown(KeyCode.UpArrow);
+
+                // FAST FALL
+                fastFallPressed = Input.GetKey(KeyCode.DownArrow);
+
+                // ATAQUES
+                lightPressed = Input.GetKeyDown(KeyCode.N);
+                heavyPressed = Input.GetKeyDown(KeyCode.M);
+
+                // BLOQUEO
+                blockPressed = Input.GetKey(KeyCode.Period);
+
+                // DASH
+                forwardKeyDown = Input.GetKeyDown(KeyCode.RightArrow);
+                backKeyDown = Input.GetKeyDown(KeyCode.LeftArrow);
+            }
+
+
+
+            // -----------------------------
+            //     DASH LOGIC
+            // -----------------------------
             FacingDirection inputDir = FacingDirection.Neutral;
 
-            if (Input.GetKeyDown(KeyCode.D))
+            if (forwardKeyDown)
                 inputDir = FacingDirection.Right;
 
-            if (Input.GetKeyDown(KeyCode.A))
+            if (backKeyDown)
                 inputDir = FacingDirection.Left;
 
             bool isForward = false;
@@ -116,14 +173,14 @@ public class FighterStateMachine : MonoBehaviour
             {
                 if (facingRight)
                 {
-                    if (inputDir.Equals( FacingDirection.Right))
+                    if (inputDir == FacingDirection.Right)
                         isForward = true;
                     else
                         isBack = true;
                 }
                 else
                 {
-                    if (inputDir.Equals (FacingDirection.Left))
+                    if (inputDir == FacingDirection.Left)
                         isForward = true;
                     else
                         isBack = true;
@@ -140,7 +197,6 @@ public class FighterStateMachine : MonoBehaviour
                 lastForwardTap = Time.time;
             }
 
-
             if (isBack)
             {
                 if (Time.time - lastBackTap < doubleTapThreshold && dashCooldownTimer <= 0f)
@@ -151,6 +207,29 @@ public class FighterStateMachine : MonoBehaviour
                 lastBackTap = Time.time;
             }
 
+            // -----------------------------
+            //     BLOQUEO FINAL
+            // -----------------------------
+            FighterHealth health = GetComponent<FighterHealth>();
+
+            if (blockPressed)
+            {
+                if (health.currentBlock > 0 && isGrounded && health.blockCooldownTimer <= 0)
+                {
+                    if (!(CurrentState is FighterBlockState))
+                        CurrentState.SwitchState(states.Block());
+                }
+                else
+                {
+                    if (CurrentState is FighterBlockState)
+                        CurrentState.SwitchState(states.Idle());
+                }
+            }
+            else
+            {
+                if (CurrentState is FighterBlockState)
+                    CurrentState.SwitchState(states.Idle());
+            }
         }
         else
         {
@@ -163,45 +242,8 @@ public class FighterStateMachine : MonoBehaviour
             return;
         }
 
-        if (Input.GetKey(KeyCode.B) && !isDummy)
-        {
-            FighterHealth healthh = GetComponent<FighterHealth>();
-
-            if (healthh.currentBlock > 0)
-            {
-                if (!(CurrentState is FighterBlockState))
-                    CurrentState.SwitchState(states.Block());
-
-            }
-            else
-            {
-                if (CurrentState is FighterBlockState)
-                    CurrentState.SwitchState(states.Idle());
-            }
-        }
-        else
-        {
-            if (CurrentState is FighterBlockState)
-                CurrentState.SwitchState(states.Idle());
-        }
-        FighterHealth health = GetComponent<FighterHealth>();
-
-        if (Input.GetKey(KeyCode.B) && health.currentBlock > 0 && health.blockCooldownTimer <= 0)
-        {
-            if (!(CurrentState is FighterBlockState))
-                CurrentState.SwitchState(states.Block());
-        }
-        else
-        {
-            if (CurrentState is FighterBlockState)
-                CurrentState.SwitchState(states.Idle());
-        }
-
-
-
         CurrentState.UpdateState();
     }
-
 
     public void UpdateFacing()
     {
@@ -213,55 +255,7 @@ public class FighterStateMachine : MonoBehaviour
             facingRight = false;
 
         Vector3 scale = transform.localScale;
-        scale.x = facingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x); //el ? es un if, significa que si facingright scale x sino scale -x
+        scale.x = facingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
         transform.localScale = scale;
     }
-
-    void OnDrawGizmos()
-    {
-        if (CurrentState == null)
-            return;
-
-        if (CurrentState is FighterLightComboState light)
-        {
-            AttackData atk = light.GetCurrentAttack();
-            float t = light.GetTimer();
-
-            float activeStart = atk.startup;
-            float activeEnd = atk.startup + atk.active;
-
-            if (t < activeStart || t > activeEnd)
-                return;
-
-            float dir = facingRight ? 1f : -1f;
-
-            Vector2 center = (Vector2)transform.position +
-                             new Vector2(atk.hitboxOffset.x * dir, atk.hitboxOffset.y);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(center, atk.hitboxSize);
-        }
-        if (CurrentState is FighterHeavyComboState heavy)
-        {
-            AttackData atk = heavy.GetCurrentAttack();
-            float t = heavy.GetTimer();
-
-            float activeStart = atk.startup;
-            float activeEnd = atk.startup + atk.active;
-
-            if (t < activeStart || t > activeEnd)
-                return;
-
-            float dir = facingRight ? 1f : -1f;
-
-            Vector2 center = (Vector2)transform.position +
-                             new Vector2(atk.hitboxOffset.x * dir, atk.hitboxOffset.y);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(center, atk.hitboxSize);
-        }
-    }
-
-
-
 }

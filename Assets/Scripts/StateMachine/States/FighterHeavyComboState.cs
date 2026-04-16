@@ -4,9 +4,12 @@ public class FighterHeavyComboState : FighterBaseState
 {
     public AttackData[] attacks;
 
-    private int step;        
-    private float timer;     
+    private int step;
+    private float timer;
     private bool hitDone;
+
+    // Nombres de animación fijos para los heavy attacks
+    private readonly string[] heavyAnimNames = { "Heavy1", "Heavy2", "Heavy3" };
 
     public FighterHeavyComboState(FighterStateMachine ctx, FighterStateFactory factory)
        : base(ctx, factory) { }
@@ -19,7 +22,8 @@ public class FighterHeavyComboState : FighterBaseState
         step = 0;
         timer = 0f;
         hitDone = false;
-        // ctx.animator.Play(attacks[step].animationName);
+
+        PlayCurrentHeavyAnimation();
     }
 
     public override void UpdateState()
@@ -31,14 +35,14 @@ public class FighterHeavyComboState : FighterBaseState
         float totalDuration = atk.startup + atk.active + atk.recovery;
         float activeStart = atk.startup;
         float activeEnd = atk.startup + atk.active;
-        if (timer >= activeStart && timer <= activeEnd)
+
+        if (!hitDone && timer >= activeStart && timer <= activeEnd)
         {
-            if (!hitDone)
-                DoHitbox(atk);
+            DoHitbox(atk);
+            hitDone = true;
         }
 
-
-        if (step < attacks.Length - 1) 
+        if (step < attacks.Length - 1)
         {
             if (ctx.heavyPressed &&
                 timer >= atk.cancelStart &&
@@ -64,13 +68,21 @@ public class FighterHeavyComboState : FighterBaseState
         timer = 0f;
         hitDone = false;
 
-
-        // ctx.animator.Play(attacks[step].animationName);
+        PlayCurrentHeavyAnimation();
     }
+
+    private void PlayCurrentHeavyAnimation()
+    {
+        int index = Mathf.Clamp(step, 0, heavyAnimNames.Length - 1);
+
+        string animName = ctx.animationPrefix + heavyAnimNames[index];
+        ctx.animator.Play(animName, 0, 0f);
+    }
+
 
     private void DoHitbox(AttackData atk)
     {
-        float dir = ctx.facingRight ? 1f : -1f; //significa que si facingright es true dir es 1 sino dir es -1
+        float dir = ctx.facingRight ? 1f : -1f;
 
         Vector2 center = (Vector2)ctx.transform.position +
                          new Vector2(atk.hitboxOffset.x * dir, atk.hitboxOffset.y);
@@ -86,13 +98,14 @@ public class FighterHeavyComboState : FighterBaseState
                 hitDone = true;
             }
 
-             Debug.Log("Golpe Heavy a: " + h.name);
+            Debug.Log("Golpe Heavy a: " + h.name);
         }
-
     }
 
     public override void ExitState()
     {
+        string idleAnim = ctx.animationPrefix + "Idle";
+        ctx.animator.Play(idleAnim, 0, 0f);
     }
 
     public AttackData GetCurrentAttack()
