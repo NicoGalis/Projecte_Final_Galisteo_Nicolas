@@ -43,27 +43,23 @@ public class FighterHealth : MonoBehaviour
 
     void HandleBlockMeter()
     {
-        // Si está en cooldown  no bloquear ni regenerar
         if (blockCooldownTimer > 0)
         {
             blockCooldownTimer -= Time.deltaTime;
             return;
         }
 
-        // Si estás bloqueando drenar
         if (fsm != null && fsm.CurrentState is FighterBlockState && currentBlock > 0)
         {
             currentBlock -= blockDrainPerSecond * Time.deltaTime;
             currentBlock = Mathf.Clamp(currentBlock, 0, basicData.Blockmeter);
 
-            // Si se quedó sin barra  activar cooldown
             if (currentBlock <= 0)
                 blockCooldownTimer = blockCooldown;
 
             return;
         }
 
-        // Regenerar cuando NO estás bloqueando
         if (currentBlock < basicData.Blockmeter)
         {
             currentBlock += blockRegenPerSecond * Time.deltaTime;
@@ -73,10 +69,9 @@ public class FighterHealth : MonoBehaviour
 
     public void TakeDamage(AttackData atk)
     {
-        // Si estás bloqueando y tienes barra  NO recibes daño
         if (fsm != null && fsm.CurrentState is FighterBlockState && currentBlock > 0 && blockCooldownTimer <= 0)
         {
-            currentBlock -= atk.blockDamage;   //AHORA USA EL VALOR DEL ATAQUE
+            currentBlock -= atk.blockDamage;   
             currentBlock = Mathf.Clamp(currentBlock, 0, basicData.Blockmeter);
 
             if (currentBlock <= 0)

@@ -110,4 +110,10 @@ public class CharacterSelectionMenu : MonoBehaviour
 
         SceneManager.LoadScene("FightScene");
     }
+
+    public void GoBack()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
+
 }

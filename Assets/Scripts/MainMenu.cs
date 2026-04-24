@@ -10,7 +10,7 @@ public void StartGame()
     }
     public void StatsPage()
         {
-        SceneManager.LoadScene("StatsScene");
+        SceneManager.LoadScene("StatsMenu");
     }
     public void QuitGame()
     {
