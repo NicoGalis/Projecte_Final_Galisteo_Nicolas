@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7753818585283723996}
   - component: {fileID: 7915738079369193248}
   - component: {fileID: 3475226337625289032}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: naruto
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5477838901052092664}
   - component: {fileID: 5471996585411664951}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Facing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +351,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8959266335524584816}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

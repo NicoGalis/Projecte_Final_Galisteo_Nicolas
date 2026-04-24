@@ -8,6 +8,10 @@ public void StartGame()
     {
         SceneManager.LoadScene("CharacterSelectionMenu");
     }
+    public void StatsPage()
+        {
+        SceneManager.LoadScene("StatsScene");
+    }
     public void QuitGame()
     {
         Application.Quit();

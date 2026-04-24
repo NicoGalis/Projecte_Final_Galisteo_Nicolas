@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
         isPaused = false;
     }
 
+
     public void QuitToMenu()
     {
         Time.timeScale = 1f;
@@ -111,4 +112,73 @@ public class GameManager : MonoBehaviour
 
         yield return www.SendWebRequest();
     }
+
+    public IEnumerator AddHeavy(int characterId)
+    {
+        string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/AddHeavy.php";
+        string body = "characterId=" + characterId;
+
+        UnityWebRequest www = new UnityWebRequest(url, "POST");
+        byte[] raw = System.Text.Encoding.UTF8.GetBytes(body);
+
+        www.uploadHandler = new UploadHandlerRaw(raw);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        yield return www.SendWebRequest();
+    }
+
+    public IEnumerator AddLight(int characterId)
+    {
+        string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/AddLight.php";
+        string body = "characterId=" + characterId;
+
+        UnityWebRequest www = new UnityWebRequest(url, "POST");
+        byte[] raw = System.Text.Encoding.UTF8.GetBytes(body);
+
+        www.uploadHandler = new UploadHandlerRaw(raw);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        yield return www.SendWebRequest();
+    }
+
+    public IEnumerator GetStats(int characterId, System.Action<CharacterStats> callback)
+    {
+        string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/GetStats.php";
+        string body = "characterId=" + characterId;
+
+        UnityWebRequest www = new UnityWebRequest(url, "POST");
+        byte[] raw = System.Text.Encoding.UTF8.GetBytes(body);
+
+        www.uploadHandler = new UploadHandlerRaw(raw);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        yield return www.SendWebRequest();
+
+        string result = www.downloadHandler.text;
+
+        if (result == "NO_CHARACTER_ID" ||
+            result == "ERROR_DB" ||
+            result == "NO_DATA" ||
+            result == "ERROR_QUERY")
+        {
+            Debug.Log("Error: " + result);
+            callback(null);
+            yield break;
+        }
+
+        string[] parts = result.Split('|');
+
+        CharacterStats stats = new CharacterStats();
+        stats.wins = int.Parse(parts[0]);
+        stats.losses = int.Parse(parts[1]);
+        stats.heavy = int.Parse(parts[2]);
+        stats.light = int.Parse(parts[3]);
+
+        callback(stats);
+    }
+
+
 }

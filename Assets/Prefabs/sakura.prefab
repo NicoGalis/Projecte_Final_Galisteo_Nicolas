@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 140491816329546345}
   - component: {fileID: 4921663529014579365}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Facing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5587870739472403109}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 2556797072931145381}
   - component: {fileID: 2980403199777701079}
   - component: {fileID: 2711367393982331064}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: sakura
   m_TagString: Player
   m_Icon: {fileID: 0}

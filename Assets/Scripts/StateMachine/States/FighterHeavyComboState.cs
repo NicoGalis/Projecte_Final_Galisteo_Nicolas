@@ -8,7 +8,6 @@ public class FighterHeavyComboState : FighterBaseState
     private float timer;
     private bool hitDone;
 
-    // Nombres de animación fijos para los heavy attacks
     private readonly string[] heavyAnimNames = { "Heavy1", "Heavy2", "Heavy3" };
 
     public FighterHeavyComboState(FighterStateMachine ctx, FighterStateFactory factory)
@@ -79,7 +78,6 @@ public class FighterHeavyComboState : FighterBaseState
         ctx.animator.Play(animName, 0, 0f);
     }
 
-
     private void DoHitbox(AttackData atk)
     {
         float dir = ctx.facingRight ? 1f : -1f;
@@ -96,6 +94,11 @@ public class FighterHeavyComboState : FighterBaseState
             {
                 hp.TakeDamage(atk);
                 hitDone = true;
+
+                int id = ctx.GetComponent<FighterHealth>().characterID;
+
+                GameManager gm = Object.FindFirstObjectByType<GameManager>();
+                ctx.StartCoroutine(gm.AddHeavy(id));
             }
 
             Debug.Log("Golpe Heavy a: " + h.name);
@@ -108,13 +111,6 @@ public class FighterHeavyComboState : FighterBaseState
         ctx.animator.Play(idleAnim, 0, 0f);
     }
 
-    public AttackData GetCurrentAttack()
-    {
-        return attacks[step];
-    }
-
-    public float GetTimer()
-    {
-        return timer;
-    }
+    public AttackData GetCurrentAttack() => attacks[step];
+    public float GetTimer() => timer;
 }

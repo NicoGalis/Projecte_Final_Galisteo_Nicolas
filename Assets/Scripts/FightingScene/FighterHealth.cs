@@ -16,7 +16,7 @@ public class FighterHealth : MonoBehaviour
     public float blockDrainPerSecond = 20f;
     public float blockRegenPerSecond = 10f;
 
-    public float blockCooldown = 1.5f;          // Tiempo sin poder bloquear
+    public float blockCooldown = 1.5f;          
     [HideInInspector] public float blockCooldownTimer = 0f;
 
     public GameManager gm;

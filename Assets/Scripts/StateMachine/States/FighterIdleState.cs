@@ -30,7 +30,6 @@ public class FighterIdleState : FighterBaseState
             return;
         }
 
-        // Si no hay input horizontal, frenar suavemente
         if (ctx.horizontalInput == 0)
         {
             ctx.rb.linearVelocity = new Vector2(0f, ctx.rb.linearVelocity.y);

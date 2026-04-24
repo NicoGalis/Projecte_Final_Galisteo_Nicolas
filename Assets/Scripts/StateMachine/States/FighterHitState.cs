@@ -21,7 +21,11 @@ public class FighterHitState : FighterBaseState
         originalPos = ctx.transform.localPosition;
 
         ctx.StartCoroutine(HitstopRoutine(0.05f));   // 50 ms de pausa
-        ctx.StartCoroutine(ShakeRoutine(0.1f, 0.1f)); // 0.1s de shake suave
+        ctx.StartCoroutine(ShakeRoutine(0.2f, 0.2f)); // 0.1s de shake suave
+
+        string hitAnim = ctx.animationPrefix + "Hit";
+        ctx.animator.Play(hitAnim, 0, 0f);
+
 
         Debug.Log("Entered Hit State");
     }
@@ -43,6 +47,8 @@ public class FighterHitState : FighterBaseState
     {
         //en el cas de que el shake quedi a mitjes, asegurem la posicio inicial
         ctx.transform.localPosition = originalPos;
+        string idleAnim = ctx.animationPrefix + "Idle";
+        ctx.animator.Play(idleAnim, 0, 0f);
     }
 
     private IEnumerator HitstopRoutine(float duration)

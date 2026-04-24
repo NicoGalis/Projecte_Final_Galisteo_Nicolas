@@ -2,14 +2,12 @@ using UnityEngine;
 
 public class FighterLightComboState : FighterBaseState
 {
-    // Lista de ataques (Light1, Light2, Light3)
     public AttackData[] attacks;
 
-    private int step;        // 0 = primer golpe, 1 = segundo, 2 = tercero
-    private float timer;     // tiempo dentro del golpe actual
-    private bool hitDone;    // para no golpear dos veces en el mismo golpe
+    private int step;
+    private float timer;
+    private bool hitDone;
 
-    // Nombres de animación fijos, en el mismo orden que los ataques
     private readonly string[] lightAnimNames = { "Light1", "Light2", "Light3" };
 
     public FighterLightComboState(FighterStateMachine ctx, FighterStateFactory factory)
@@ -17,7 +15,6 @@ public class FighterLightComboState : FighterBaseState
 
     public override void EnterState()
     {
-        // Frenar movimiento horizontal al iniciar el combo
         ctx.rb.linearVelocity = new Vector2(0f, ctx.rb.linearVelocity.y);
 
         attacks = ctx.lightComboAttacks;
@@ -25,7 +22,6 @@ public class FighterLightComboState : FighterBaseState
         timer = 0f;
         hitDone = false;
 
-        // Reproducir animación del primer golpe (Light1)
         PlayCurrentLightAnimation();
     }
 
@@ -39,14 +35,12 @@ public class FighterLightComboState : FighterBaseState
         float activeStart = atk.startup;
         float activeEnd = atk.startup + atk.active;
 
-        // Activar hitbox durante frames activos
         if (!hitDone && timer >= activeStart && timer <= activeEnd)
         {
             DoHitbox(atk);
             hitDone = true;
         }
 
-        // Cancelar al siguiente golpe si se pulsa light dentro del cancel window
         if (step < attacks.Length - 1)
         {
             if (ctx.lightPressed &&
@@ -58,7 +52,6 @@ public class FighterLightComboState : FighterBaseState
             }
         }
 
-        // Termina el golpe  volver a Idle o Run
         if (timer >= totalDuration)
         {
             if (Mathf.Abs(ctx.horizontalInput) > 0.1f)
@@ -74,7 +67,6 @@ public class FighterLightComboState : FighterBaseState
         timer = 0f;
         hitDone = false;
 
-        // Reproducir animación del siguiente golpe (Light2 o Light3)
         PlayCurrentLightAnimation();
     }
 
@@ -95,16 +87,30 @@ public class FighterLightComboState : FighterBaseState
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, atk.hitboxSize, 0f, ctx.enemyLayer);
 
+        FighterHealth selfHealth = ctx.GetComponent<FighterHealth>();
+
         foreach (var h in hits)
         {
             FighterHealth hp = h.GetComponent<FighterHealth>();
+
+            if (hp == selfHealth)
+                continue;
+
             if (hp != null)
             {
                 hp.TakeDamage(atk);
                 hitDone = true;
+
+                int id = selfHealth.characterID;
+
+                GameManager gm = Object.FindFirstObjectByType<GameManager>();
+                ctx.StartCoroutine(gm.AddLight(id));
             }
+
+            Debug.Log("Golpe Light a: " + h.name);
         }
     }
+
 
     public override void ExitState()
     {
@@ -112,15 +118,6 @@ public class FighterLightComboState : FighterBaseState
         ctx.animator.Play(idleAnim, 0, 0f);
     }
 
-
-
-    public AttackData GetCurrentAttack()
-    {
-        return attacks[step];
-    }
-
-    public float GetTimer()
-    {
-        return timer;
-    }
+    public AttackData GetCurrentAttack() => attacks[step];
+    public float GetTimer() => timer;
 }
