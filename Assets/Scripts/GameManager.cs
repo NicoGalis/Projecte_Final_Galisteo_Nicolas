@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int p1Wins = 0;
     public int p2Wins = 0;
     public TextMeshProUGUI WinCounter;
+    public TextMeshProUGUI roundMessage; 
 
     public FighterHealth player1;
     public FighterHealth player2;
@@ -20,18 +21,21 @@ public class GameManager : MonoBehaviour
     {
         FighterHealth winner;
         FighterHealth loser;
+        string winnerName;
 
         if (deadPlayer == player1)
         {
             p2Wins++;
             winner = player2;
             loser = player1;
+            winnerName = "PLAYER 2";
         }
         else
         {
             p1Wins++;
             winner = player1;
             loser = player2;
+            winnerName = "PLAYER 1";
         }
 
         StartCoroutine(AddWin(winner.characterID));
@@ -39,6 +43,28 @@ public class GameManager : MonoBehaviour
 
         WinCounter.text = p1Wins + " - " + p2Wins;
 
+        StartCoroutine(ShowWinAndReset(winnerName));
+    }
+
+    IEnumerator ShowWinAndReset(string winnerName)
+    {
+        roundMessage.text = winnerName + " WINS!";
+        roundMessage.gameObject.SetActive(true);
+
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(3f);
+
+        roundMessage.gameObject.SetActive(false);
+
+        if (p1Wins >= 3 || p2Wins >= 3)
+        {
+            p1Wins = 0;
+            p2Wins = 0;
+            WinCounter.text = "0 - 0";
+        }
+
+        // Reprendre joc i reiniciar ronda
+        Time.timeScale = 1f;
         ResetRound();
     }
 
@@ -75,7 +101,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
     }
-
 
     public void QuitToMenu()
     {
@@ -179,6 +204,4 @@ public class GameManager : MonoBehaviour
 
         callback(stats);
     }
-
-
 }

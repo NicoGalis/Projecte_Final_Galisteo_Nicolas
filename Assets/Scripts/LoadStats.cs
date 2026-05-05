@@ -91,7 +91,6 @@ public class LoadStats : MonoBehaviour
                 yield break;
             }
 
-            // Format: name|wins|losses|heavy|light
             string[] parts = data.Split('|');
 
             winsText.text = "Wins: " + parts[1];

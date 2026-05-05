@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class FighterBaseState
 {
-    protected FighterStateMachine ctx;
+    protected FighterStateMachine  ctx;
     protected FighterStateFactory factory;
 
     public FighterBaseState(FighterStateMachine currentContext, FighterStateFactory fighterStateFactory)
