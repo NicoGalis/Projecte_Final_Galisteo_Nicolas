@@ -62,7 +62,7 @@ A continuació es mostren els controls oficials del joc, separats per jugador.
 5. Si decideixes començar a jugar, entraràs al menú de selecció de personatges.  
    Per seleccionar el teu lluitador, prem **Done!**
 
-   ![Selecció de personatges](Images/Select.png)
+   ![Selecció de personatges](Images/select.png)
 
 6. Quan tots dos jugadors hagin premut **Done!**, prem **Fight!** i ja podeu començar la lluita!
 
