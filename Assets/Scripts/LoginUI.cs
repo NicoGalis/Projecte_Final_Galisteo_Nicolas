@@ -6,14 +6,13 @@ public class LoginUI : MonoBehaviour
 {
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
-    public UserManager userManager;
 
     public void OnLoginButton()
     {
         string user = usernameInput.text;
         string pass = passwordInput.text;
 
-        StartCoroutine(userManager.Login(user, pass));
+        StartCoroutine(UserManager.Instance.Login(user, pass));
     }
 
     public void OnRegisterButton()

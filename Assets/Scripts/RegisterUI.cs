@@ -6,14 +6,13 @@ public class RegisterUI : MonoBehaviour
 {
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
-    public UserManager userManager;
 
     public void OnRegisterButton()
     {
         string user = usernameInput.text;
         string pass = passwordInput.text;
 
-        StartCoroutine(userManager.Register(user, pass));
+        StartCoroutine(UserManager.Instance.Register(user, pass));
     }
 
     public void OnBackToLoginButton()
