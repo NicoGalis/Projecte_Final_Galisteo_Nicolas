@@ -7,6 +7,7 @@ public class VolumeController : MonoBehaviour
 
     void Start()
     {
+        slider = Object.FindAnyObjectByType<Slider>();
         // Carregar volum guardat (0.5 per defecte)
         float savedVolume = PlayerPrefs.GetFloat("volume", 0.5f);
 

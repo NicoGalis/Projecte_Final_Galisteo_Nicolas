@@ -82,7 +82,6 @@ public class FighterHealth : MonoBehaviour
         }
 
 
-        // Daño normal
         currentHealth -= atk.damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, basicData.Health);
         UpdateHealthBar();

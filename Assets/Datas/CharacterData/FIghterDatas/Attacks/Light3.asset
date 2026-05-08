@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b928532d6185c438449351d8584968, type: 3}
   m_Name: Light3
   m_EditorClassIdentifier: 
-  startup: 0.05
-  active: 0.4
+  startup: 0.2
+  active: 0.6
   recovery: 0.05
   cancelStart: 0.05
   cancelEnd: 0.25

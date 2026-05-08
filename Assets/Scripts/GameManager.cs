@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public int p1Wins = 0;
     public int p2Wins = 0;
     public TextMeshProUGUI WinCounter;
-    public TextMeshProUGUI roundMessage; 
+    public TextMeshProUGUI roundMessage;
 
     public FighterHealth player1;
     public FighterHealth player2;
@@ -38,6 +38,19 @@ public class GameManager : MonoBehaviour
             winnerName = "PLAYER 1";
         }
 
+        // --- ACTUALIZAR STATS DEL USUARIO LOGUEADO ---
+        if (winner == player1)
+        {
+            StartCoroutine(AddUserWin(UserController.Instance.userId));
+            StartCoroutine(UserManager.Instance.LoadStats(UserController.Instance.userId));
+        }
+        else
+        {
+            StartCoroutine(AddUserLoss(UserController.Instance.userId));
+            StartCoroutine(UserManager.Instance.LoadStats(UserController.Instance.userId));
+        }
+
+        // --- ACTUALIZAR STATS DEL PERSONAJE ---
         StartCoroutine(AddWin(winner.characterID));
         StartCoroutine(AddLoss(loser.characterID));
 
@@ -52,7 +65,7 @@ public class GameManager : MonoBehaviour
         roundMessage.gameObject.SetActive(true);
 
         Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(1.5f);
 
         roundMessage.gameObject.SetActive(false);
 
@@ -63,7 +76,6 @@ public class GameManager : MonoBehaviour
             WinCounter.text = "0 - 0";
         }
 
-        // Reprendre joc i reiniciar ronda
         Time.timeScale = 1f;
         ResetRound();
     }
@@ -107,6 +119,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("StartMenu");
     }
+
+    // -------------------------
+    //  STATS DE PERSONAJE
+    // -------------------------
 
     IEnumerator AddWin(int characterId)
     {
@@ -203,5 +219,39 @@ public class GameManager : MonoBehaviour
         stats.light = int.Parse(parts[3]);
 
         callback(stats);
+    }
+
+    // -------------------------
+    //  STATS DEL USUARIO
+    // -------------------------
+
+    IEnumerator AddUserWin(int userId)
+    {
+        string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/AddUserWin.php";
+        string body = "userId=" + userId;
+
+        UnityWebRequest www = new UnityWebRequest(url, "POST");
+        byte[] raw = System.Text.Encoding.UTF8.GetBytes(body);
+
+        www.uploadHandler = new UploadHandlerRaw(raw);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        yield return www.SendWebRequest();
+    }
+
+    IEnumerator AddUserLoss(int userId)
+    {
+        string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/AddUserLoss.php";
+        string body = "userId=" + userId;
+
+        UnityWebRequest www = new UnityWebRequest(url, "POST");
+        byte[] raw = System.Text.Encoding.UTF8.GetBytes(body);
+
+        www.uploadHandler = new UploadHandlerRaw(raw);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        yield return www.SendWebRequest();
     }
 }
