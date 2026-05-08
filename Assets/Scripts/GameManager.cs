@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(AddUserWin(UserController.Instance.userId));
             StartCoroutine(UserManager.Instance.LoadStats(UserController.Instance.userId));
         }
-        else
+        if(winner == player2)
         {
             StartCoroutine(AddUserLoss(UserController.Instance.userId));
             StartCoroutine(UserManager.Instance.LoadStats(UserController.Instance.userId));
