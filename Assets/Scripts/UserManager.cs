@@ -20,7 +20,6 @@ public class UserManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    // ---------------- LOGIN ----------------
     public IEnumerator Login(string username, string password)
     {
         string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/UserLogin.php";

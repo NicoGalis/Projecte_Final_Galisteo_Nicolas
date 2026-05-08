@@ -12,7 +12,7 @@ public class FighterDashState : FighterBaseState
     {
         timer = ctx.dashDuration;
 
-        // Activar animación de dash
+        ctx.animator.Play(ctx.animationPrefix + "Dash", 0, 0f);
         ctx.animator.SetBool("isDashing", true);
 
         if (ctx.airDashUsed)
@@ -53,7 +53,6 @@ public class FighterDashState : FighterBaseState
 
     public override void ExitState()
     {
-        // Desactivar animación de dash
         ctx.animator.SetBool("isDashing", false);
 
         ctx.dashCooldownTimer = ctx.dashCooldown;

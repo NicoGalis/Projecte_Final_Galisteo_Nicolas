@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
             winnerName = "PLAYER 1";
         }
 
-        // --- ACTUALIZAR STATS DEL USUARIO LOGUEADO ---
         if (winner == player1)
         {
             StartCoroutine(AddUserWin(UserController.Instance.userId));
@@ -50,7 +49,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine(UserManager.Instance.LoadStats(UserController.Instance.userId));
         }
 
-        // --- ACTUALIZAR STATS DEL PERSONAJE ---
         StartCoroutine(AddWin(winner.characterID));
         StartCoroutine(AddLoss(loser.characterID));
 
