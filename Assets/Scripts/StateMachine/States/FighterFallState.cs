@@ -15,15 +15,15 @@ public class FighterFallState : FighterBaseState
 
         ctx.UpdateFacing();
 
-        float airSpeed = ctx.basicMovementDatas.speed / ctx.basicMovementDatas.onAirSpeedDivisor;
+        float airSpeed = ctx.basicMovementDatas.speed / ctx.basicMovementDatas.onAirSpeedDivisor; // Calcular velocitat horitzontal a l'aire
 
         float newX = ctx.horizontalInput * airSpeed;
         float newY = ctx.rb.linearVelocity.y;
 
-        if (ctx.fastFallPressed)
+        if (ctx.fastFallPressed) // Si el jugador apreta el botó de fast fall, augmenta la velocitat de caiguda
             newY = -ctx.basicMovementDatas.fallSpeed * 1.0001f;
 
-        if (newY < -ctx.basicMovementDatas.fallSpeed)
+        if (newY < -ctx.basicMovementDatas.fallSpeed) // Limitar la velocitat de caiguda a fallSpeed
             newY = -ctx.basicMovementDatas.fallSpeed;
 
         ctx.rb.linearVelocity = new Vector2(newX, newY);

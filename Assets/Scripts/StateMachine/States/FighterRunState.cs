@@ -29,7 +29,7 @@ public class FighterRunState : FighterBaseState
             SwitchState(factory.Jump());
             return;
         }
-        Vector2 move = new Vector2(ctx.horizontalInput * ctx.basicMovementDatas.speed, ctx.rb.linearVelocity.y);
+        Vector2 move = new Vector2(ctx.horizontalInput * ctx.basicMovementDatas.speed, ctx.rb.linearVelocity.y); // Calcular la velocitat horitzontal basada en l'input i la velocitat vertical actual
         ctx.rb.linearVelocity = move;
         
         ctx.animator.SetBool("isRunning", isRunning);
@@ -38,12 +38,12 @@ public class FighterRunState : FighterBaseState
 
         bool movingBackwards =
             (ctx.facingRight && ctx.horizontalInput < 0) ||
-            (!ctx.facingRight && ctx.horizontalInput > 0);
+            (!ctx.facingRight && ctx.horizontalInput > 0); // Comprovar si el jugador se está moviendo en la dirección opuesta a la que está mirando
 
         if (movingBackwards)
             speed *= 0.3f; 
 
-     move = new Vector2(ctx.horizontalInput * speed, ctx.rb.linearVelocity.y);
+     move = new Vector2(ctx.horizontalInput * speed, ctx.rb.linearVelocity.y); // Recalcular la velocidad horizontal con la reducción aplicada si se está moviendo hacia atrás
         ctx.rb.linearVelocity = move;
 
         ctx.animator.SetBool("isRunning", !movingBackwards);

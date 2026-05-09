@@ -52,7 +52,6 @@ public class UserManager : MonoBehaviour
         }
     }
 
-    // ---------------- REGISTER ----------------
     public IEnumerator Register(string username, string password)
     {
         string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/UserRegister.php";
@@ -85,7 +84,6 @@ public class UserManager : MonoBehaviour
         }
     }
 
-    // ---------------- ADD WIN ----------------
     public IEnumerator AddUserWin(int userId)
     {
         string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/AddUserWin.php";
@@ -97,7 +95,6 @@ public class UserManager : MonoBehaviour
         yield return www.SendWebRequest();
     }
 
-    // ---------------- ADD LOSS ----------------
     public IEnumerator AddUserLoss(int userId)
     {
         string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/AddUserLoss.php";
@@ -109,7 +106,6 @@ public class UserManager : MonoBehaviour
         yield return www.SendWebRequest();
     }
 
-    // ---------------- LOAD STATS ----------------
     public IEnumerator LoadStats(int userId)
     {
         string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/GetUserStats.php";

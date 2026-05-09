@@ -9,10 +9,6 @@ public class FighterBlockState : FighterBaseState
     {
         ctx.animator.SetBool("isBlocking", true);
         ctx.rb.linearVelocity = Vector2.zero;
-        if(ctx.isGrounded!)
-        {
-            
-        }
     }
 
     public override void UpdateState()

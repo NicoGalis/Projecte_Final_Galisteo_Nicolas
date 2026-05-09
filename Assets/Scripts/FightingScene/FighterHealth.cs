@@ -22,7 +22,7 @@ public class FighterHealth : MonoBehaviour
     public GameManager gm;
     FighterStateMachine fsm;
 
-    void Start()
+    void Start() //Inicialitzacio de la vida, blockmeter i referencies
     {
         gm = FindAnyObjectByType<GameManager>();
 
@@ -41,15 +41,15 @@ public class FighterHealth : MonoBehaviour
         UpdateBlockBar();
     }
 
-    void HandleBlockMeter()
+    void HandleBlockMeter() //Gestio del blockmeter, drain i regen
     {
         if (blockCooldownTimer > 0)
         {
-            blockCooldownTimer -= Time.deltaTime;
+            blockCooldownTimer -= Time.deltaTime; //Reduccio del timer de cooldown
             return;
         }
 
-        if (fsm != null && fsm.CurrentState is FighterBlockState && currentBlock > 0)
+        if (fsm != null && fsm.CurrentState is FighterBlockState && currentBlock > 0) //Si esta bloquejant i encara te blockmeter, el drain es continua
         {
             currentBlock -= blockDrainPerSecond * Time.deltaTime;
             currentBlock = Mathf.Clamp(currentBlock, 0, basicData.Blockmeter);
@@ -60,14 +60,14 @@ public class FighterHealth : MonoBehaviour
             return;
         }
 
-        if (currentBlock < basicData.Blockmeter)
+        if (currentBlock < basicData.Blockmeter)//Si no esta bloquejant i no te el blockmeter al maxim, el regen es continua
         {
             currentBlock += blockRegenPerSecond * Time.deltaTime;
             currentBlock = Mathf.Clamp(currentBlock, 0, basicData.Blockmeter);
         }
     }
 
-    public void TakeDamage(AttackData atk)
+    public void TakeDamage(AttackData atk) //Gestio del que passa quan el personatge rep un atac, si esta bloquejant es redueix el blockmeter, sino es redueix la vida i es comprova si ha mort o no
     {
         if (fsm != null && fsm.CurrentState is FighterBlockState && currentBlock > 0 && blockCooldownTimer <= 0)
         {
@@ -82,8 +82,8 @@ public class FighterHealth : MonoBehaviour
         }
 
 
-        currentHealth -= atk.damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, basicData.Health);
+        currentHealth -= atk.damage; //Reduccio de la vida
+        currentHealth = Mathf.Clamp(currentHealth, 0, basicData.Health); //Comprovacio que la vida no sigui negativa
         UpdateHealthBar();
 
         if (currentHealth <= 0)

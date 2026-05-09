@@ -60,14 +60,14 @@ public class FighterStateMachine : MonoBehaviour
 
     private FighterStateFactory states;
 
-    private void Awake()
+    private void Awake() //Inicialitzacio de components i estats
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         states = new FighterStateFactory(this);
     }
 
-    void Start()
+    void Start() //Inicialitzacio de la capa enemiga i estat inicial
     {
         if (isPlayer1)
             enemyLayer = LayerMask.GetMask("Player2");
@@ -79,12 +79,12 @@ public class FighterStateMachine : MonoBehaviour
     }
 
 
-    public void GotHit()
+    public void GotHit() //en comptes de posar el switchstate a cada atac, el que fa es que quan el personatge rep un atac, aquest mètode és cridat i canvia directament a l'estat de hit, on es gestionarà el hitstun i la transició a altres estats
     {
         CurrentState.SwitchState(states.Hit());
     }
 
-    void Update()
+    void Update() //Gestió d'inputs, actualització de l'estat actual i actualització de la direcció a la que mira el personatge
     {
         UpdateFacing();
 
@@ -256,7 +256,7 @@ public class FighterStateMachine : MonoBehaviour
         CurrentState.UpdateState();
     }
 
-    public void UpdateFacing()
+    public void UpdateFacing() //Aquest mètode actualitza la direcció a la que mira el personatge en funció de la posició de l'enemic, i també canvia l'escala del personatge per fer que giri cap a l'enemic
     {
         if (enemy == null)
         {

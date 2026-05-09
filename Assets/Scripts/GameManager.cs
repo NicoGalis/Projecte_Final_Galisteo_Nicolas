@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
             winnerName = "PLAYER 1";
         }
 
+        // Actualizar stats del usuario
         if (winner == player1)
         {
             StartCoroutine(AddUserWin(UserController.Instance.userId));
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(ShowWinAndReset(winnerName));
     }
-
+    // Mostra missatge de victoria i reinicia la ronda despres de 1.5
     IEnumerator ShowWinAndReset(string winnerName)
     {
         roundMessage.text = winnerName + " WINS!";
@@ -118,9 +119,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("StartMenu");
     }
 
-    // -------------------------
-    //  STATS DE PERSONAJE
-    // -------------------------
+    //stats dels personatges a la base de dades
 
     IEnumerator AddWin(int characterId)
     {
@@ -219,10 +218,8 @@ public class GameManager : MonoBehaviour
         callback(stats);
     }
 
-    // -------------------------
-    //  STATS DEL USUARIO
-    // -------------------------
 
+    //stats dels usuaris a la base de dades
     IEnumerator AddUserWin(int userId)
     {
         string url = "https://elservidor.cat/~elcampalab/campalab/pau/files/nico/AddUserWin.php";

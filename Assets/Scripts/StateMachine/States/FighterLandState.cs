@@ -9,7 +9,7 @@ public class FighterLandState : FighterBaseState
 
     public override void EnterState()
     {
-        timer = ctx.basicMovementDatas.landTime;
+        timer = ctx.basicMovementDatas.landTime;  //agafar el temps de l'animació de landing
     }
 
     public override void UpdateState()

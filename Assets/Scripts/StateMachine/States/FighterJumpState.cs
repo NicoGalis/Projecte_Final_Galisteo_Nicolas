@@ -11,8 +11,8 @@ public class FighterJumpState : FighterBaseState
 
         ctx.animator.SetBool("isJumping", true);
 
-        Vector2 v = ctx.rb.linearVelocity;
-        v.y = ctx.basicMovementDatas.jumpForce;
+        Vector2 v = ctx.rb.linearVelocity; // Mantenim la velocitat horitzontal actual del jugador
+        v.y = ctx.basicMovementDatas.jumpForce; // Assignem la força de salt a la component vertical
         ctx.rb.linearVelocity = v;
 
     }
@@ -21,11 +21,11 @@ public class FighterJumpState : FighterBaseState
     {
         ctx.UpdateFacing();
 
-        float airSpeed = ctx.basicMovementDatas.speed / ctx.basicMovementDatas.onAirSpeedDivisor;
+        float airSpeed = ctx.basicMovementDatas.speed / ctx.basicMovementDatas.onAirSpeedDivisor; // Calcular velocitat horitzontal a l'aire
 
-        if(ctx.fastFallPressed && Time.time - jumpStartTime > fastFallDelay)
+        if (ctx.fastFallPressed && Time.time - jumpStartTime > fastFallDelay)
         {
-            ctx.rb.linearVelocity = new Vector2(ctx.rb.linearVelocity.x, -ctx.basicMovementDatas.fallSpeed * 1.0001f);
+            ctx.rb.linearVelocity = new Vector2(ctx.rb.linearVelocity.x, -ctx.basicMovementDatas.fallSpeed * 1.0001f); // Aplicar fast fall
             SwitchState(factory.Fall());
             return;
         }
@@ -36,7 +36,7 @@ public class FighterJumpState : FighterBaseState
         );
 
 
-        if (ctx.rb.linearVelocity.y <= 0)
+        if (ctx.rb.linearVelocity.y <= 0) // Si el jugador està caient (velocitat vertical negativa o zero), canvia a l'estat de caiguda
         {
             SwitchState(factory.Fall());
         }

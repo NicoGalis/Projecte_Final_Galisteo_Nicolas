@@ -53,7 +53,7 @@ public class FighterHitState : FighterBaseState
 
     private IEnumerator HitstopRoutine(float duration)
     {
-        float originalTimeScale = Time.timeScale;
+        float originalTimeScale = Time.timeScale; // Guardem el timeScale original
 
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(duration);

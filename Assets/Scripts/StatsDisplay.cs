@@ -7,7 +7,7 @@ public class StatsDisplay : MonoBehaviour
     public TMP_Text winsText;
     public TMP_Text losesText;
 
-    void Start()
+    void Start() //carrega les dades de l'usuari des del UserController i les mostra al UI
     {
         usernameText.text = UserController.Instance.username;
         winsText.text = UserController.Instance.wins.ToString();

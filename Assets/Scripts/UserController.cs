@@ -9,7 +9,7 @@ public class UserController : MonoBehaviour
     public int wins;
     public int loses;
 
-    void Awake()
+    void Awake() //Singleton pattern per mantenir les dades de l'usuari a través de les escenes
     {
         if (Instance == null)
         {

@@ -13,9 +13,9 @@ public class FighterLightComboState : FighterBaseState
     public FighterLightComboState(FighterStateMachine ctx, FighterStateFactory factory)
         : base(ctx, factory) { }
 
-    public override void EnterState()
+    public override void EnterState() // Quan entrem a l'estat de combo, resetejem la velocitat horitzontal del jugador per evitar que es mogui durant l'animació d'atac
     {
-        ctx.rb.linearVelocity = new Vector2(0f, ctx.rb.linearVelocity.y);
+        ctx.rb.linearVelocity = new Vector2(0f, ctx.rb.linearVelocity.y); // Reseteja la velocitat horitzontal
 
         attacks = ctx.lightComboAttacks;
         step = 0;
@@ -31,17 +31,17 @@ public class FighterLightComboState : FighterBaseState
 
         AttackData atk = attacks[step];
 
-        float totalDuration = atk.startup + atk.active + atk.recovery;
-        float activeStart = atk.startup;
-        float activeEnd = atk.startup + atk.active;
+        float totalDuration = atk.startup + atk.active + atk.recovery; // Calculem la durada total de l'atac sumant les fases de startup, active i recovery
+        float activeStart = atk.startup; // El moment en què comença la fase activa de l'atac
+        float activeEnd = atk.startup + atk.active; // El moment en què acaba la fase activa de l'atac
 
-        if (!hitDone && timer >= activeStart && timer <= activeEnd)
+        if (!hitDone && timer >= activeStart && timer <= activeEnd) // Si encara no hem aplicat el hitbox i estem dins de la fase activa, apliquem el hitbox
         {
             DoHitbox(atk);
             hitDone = true;
         }
 
-        if (step < attacks.Length - 1)
+        if (step < attacks.Length - 1) // Si encara no hem arribat a l'últim atac del combo, comprovem si el jugador ha premut el botó de light per cancel·lar cap al següent atac
         {
             if (ctx.lightPressed &&
                 timer >= atk.cancelStart &&
@@ -61,7 +61,7 @@ public class FighterLightComboState : FighterBaseState
         }
     }
 
-    private void GoToNextStep()
+    private void GoToNextStep() // Quan el jugador prem el botó de light dins de la finestra de cancel·lació, avancem al següent atac del combo
     {
         step++;
         timer = 0f;

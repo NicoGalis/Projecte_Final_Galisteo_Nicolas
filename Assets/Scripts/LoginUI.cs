@@ -7,7 +7,7 @@ public class LoginUI : MonoBehaviour
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
 
-    public void OnLoginButton()
+    public void OnLoginButton() //agafa el text i el passa a UserManager per fer el login
     {
         string user = usernameInput.text;
         string pass = passwordInput.text;

@@ -55,7 +55,7 @@ public class CharacterSelectionMenu : MonoBehaviour
         UpdateDisplays();
     }
 
-    public void P1_Previous()
+    public void P1_Previous() 
     {
         if (p1Locked) return;
         indexP1--;
@@ -73,7 +73,7 @@ public class CharacterSelectionMenu : MonoBehaviour
     public void P2_Next()
     {
         if (p2Locked) return;
-        indexP2 = (indexP2 + 1) % characters.Length;
+        indexP2 = (indexP2 + 1) % characters.Length; //fa que torni al principi quan arriba al final
         UpdateDisplays();
     }
 
@@ -100,11 +100,11 @@ public class CharacterSelectionMenu : MonoBehaviour
 
     public void StartFight()
     {
-        // Guardar índices (para instanciar)
+        //guardar index per instanciar
         PlayerPrefs.SetInt("P1Character", indexP1);
         PlayerPrefs.SetInt("P2Character", indexP2);
 
-        // Guardar IDs reales de la base de datos
+        // Guardar id reals de la base de dades per a cada jugador
         PlayerPrefs.SetInt("P1CharacterID", characterIDs[indexP1]);
         PlayerPrefs.SetInt("P2CharacterID", characterIDs[indexP2]);
 

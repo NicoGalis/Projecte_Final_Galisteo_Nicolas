@@ -18,9 +18,13 @@ public class FighterDashState : FighterBaseState
         if (ctx.airDashUsed)
             return;
 
-        dashDir = ctx.facingRight ? 1 : -1;
+        // veure si el dash es cap a la direccio que el jugador esta mirant o cap a la contraria
+        if (ctx.facingRight)
+            dashDir = 1;
+        else
+            dashDir = -1;
 
-        if (ctx.dashDirection == -1)
+        if (ctx.dashDirection == -1) // si el jugador vol dashar cap a la direccio contraria a la que esta mirant
             dashDir *= -1;
 
         ctx.rb.linearVelocity = new Vector2(dashDir * ctx.dashSpeed, 0f);
@@ -33,9 +37,9 @@ public class FighterDashState : FighterBaseState
     {
         ctx.rb.linearVelocity = new Vector2(dashDir * ctx.dashSpeed, 0f);
 
-        timer -= Time.deltaTime;
+        timer -= Time.deltaTime; // el dash dura un temps limitat, i quan s'acaba, el jugador torna a l'estat normal
 
-        if (timer <= 0f)
+        if (timer <= 0f) 
         {
             if (ctx.horizontalInput != 0)
                 SwitchState(factory.Run());
@@ -54,7 +58,6 @@ public class FighterDashState : FighterBaseState
     public override void ExitState()
     {
         ctx.animator.SetBool("isDashing", false);
-
         ctx.dashCooldownTimer = ctx.dashCooldown;
     }
 }
