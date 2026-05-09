@@ -107,7 +107,7 @@ public class FighterHealth : MonoBehaviour
         UpdateBlockBar();
     }
 
-    void UpdateHealthBar()
+   public void UpdateHealthBar()
     {
         if (healthFill != null)
         {
@@ -117,7 +117,7 @@ public class FighterHealth : MonoBehaviour
         }
     }
 
-    void UpdateBlockBar()
+  public void UpdateBlockBar()
     {
         if (blockFill != null)
         {

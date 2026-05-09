@@ -101,6 +101,32 @@ Realitza un dash prement dues vegades ràpid la direcció cap endavant o cap enr
 
 ---
 
+### Mecàniques avançades
+
+### Dash (amb temps de recuperació)
+El dash és un moviment ràpid que et permet avançar o retrocedir de cop.
+Després de fer-ne un, el personatge necessita un petit temps de recuperació abans de poder-ne fer un altre.
+Això evita que puguis fer dash de manera contínua i manté el combat equilibrat.
+
+### Bloqueig (consum i recuperació)
+Quan prems el botó de bloqueig, el personatge es protegeix dels atacs.
+Cada vegada que comences a bloquejar, es consumeix una part inicial de la barra de bloqueig.
+Mentre mantens el bloqueig, la barra es va drenant de manera gradual.
+Quan deixes de bloquejar, la barra es recupera sola fins a tornar al màxim.
+
+### Block Cancel
+Els atacs pesats deixen el personatge exposat si fallen, fent que durant un instant no et puguis defensar.
+Si prems bloqueig just després d’un atac pesat fallat, pots cancel·lar aquesta vulnerabilitat.
+Fer un block cancel consumeix una part de la barra de bloqueig, així que cal utilitzar-lo amb precisió.
+
+### BackJump
+Quan et mous cap enrere caminant, el personatge es desplaça més lentament.
+En canvi, si saltes cap enrere, el moviment és més ràpid, però amb un risc important:
+durant el salt no pots bloquejar, així que quedes exposat als atacs rivals.
+És una eina útil per escapar, però cal utilitzar-la amb cura.
+
+---
+
 ## Requisits del Sistema
 * **SO:** Windows 10 o superior / macOS / Linux  
 * **Processador:** Dual Core 2.0 GHz  

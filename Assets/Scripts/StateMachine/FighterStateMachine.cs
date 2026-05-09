@@ -215,13 +215,14 @@ public class FighterStateMachine : MonoBehaviour
 
             FighterHealth health = GetComponent<FighterHealth>();
 
-            if (blockPressed)
+            if (blockPressed) //si el botó de block està premut, es comprova si el personatge té blockmeter i està a terra, i si és així canvia a l'estat de block
             {
                 if (health.currentBlock > 0 && isGrounded && health.blockCooldownTimer <= 0)
                 {
                     if (!(CurrentState is FighterBlockState))
                     {
                         CurrentState.SwitchState(states.Block());
+
                     }
                 }
                 else
