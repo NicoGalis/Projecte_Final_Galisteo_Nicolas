@@ -13,6 +13,7 @@ public class RegisterUI : MonoBehaviour
         string pass = passwordInput.text;
 
         StartCoroutine(UserManager.Instance.Register(user, pass));
+        SceneManager.LoadScene("Login");
     }
 
     public void OnBackToLoginButton()
