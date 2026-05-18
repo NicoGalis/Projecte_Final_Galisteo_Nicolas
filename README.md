@@ -18,12 +18,12 @@ A continuació es mostren els controls oficials del joc, separats per jugador.
 
 | Acció | Tecla |
 | :--- | :--- |
-| **Moure’s** | `A` `D` |
+| **Moure's** | `A` `D` |
 | **Saltar** | `W` |
 | **Caiguda ràpida** | `S` |
-| **Atac lleuger** | `J` |
-| **Atac pesat** | `K` |
-| **Bloqueig** | `B` |
+| **Atac lleuger** | `V` |
+| **Atac pesat** | `G` |
+| **Bloqueig** | `F` |
 | **Dash endavant** | `D` dues vegades |
 | **Dash enrere** | `A` dues vegades |
 
@@ -31,14 +31,14 @@ A continuació es mostren els controls oficials del joc, separats per jugador.
 
 | Acció | Tecla |
 | :--- | :--- |
-| **Moure’s** | `←` `→` |
-| **Saltar** | `↑` |
-| **Caiguda ràpida** | `↓` |
-| **Atac lleuger** | `N` |
-| **Atac pesat** | `M` |
-| **Bloqueig** | `.` |
-| **Dash endavant** | `→` dues vegades |
-| **Dash enrere** | `←` dues vegades |
+| **Moure's** | `J` `L` |
+| **Saltar** | `I` |
+| **Caiguda ràpida** | `K` |
+| **Atac lleuger** | `B` |
+| **Atac pesat** | `H` |
+| **Bloqueig** | `;` |
+| **Dash endavant** | `L` dues vegades |
+| **Dash enrere** | `J` dues vegades |
 
 ---
 

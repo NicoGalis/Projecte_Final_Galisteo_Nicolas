@@ -115,21 +115,21 @@ public class FighterStateMachine : MonoBehaviour
                 jumpPressed = Input.GetKeyDown(KeyCode.W);
                 fastFallPressed = Input.GetKey(KeyCode.S);
 
-                lightPressed = Input.GetKeyDown(KeyCode.J);
-                heavyPressed = Input.GetKeyDown(KeyCode.K);
+                lightPressed = Input.GetKeyDown(KeyCode.V);
+                heavyPressed = Input.GetKeyDown(KeyCode.G);
 
-                blockPressed = Input.GetKey(KeyCode.L);
+                blockPressed = Input.GetKey(KeyCode.F);
 
                 forwardKeyDown = Input.GetKeyDown(KeyCode.D);
                 backKeyDown = Input.GetKeyDown(KeyCode.A);
             }
             else
             {
-                if (Input.GetKey(KeyCode.RightArrow))
+                if (Input.GetKey(KeyCode.L))
                 {
                     horizontalInput = 1;
                 }
-                else if (Input.GetKey(KeyCode.LeftArrow))
+                else if (Input.GetKey(KeyCode.J))
                 {
                     horizontalInput = -1;
                 }
@@ -138,16 +138,16 @@ public class FighterStateMachine : MonoBehaviour
                     horizontalInput = 0;
                 }
 
-                jumpPressed = Input.GetKeyDown(KeyCode.UpArrow);
-                fastFallPressed = Input.GetKey(KeyCode.DownArrow);
+                jumpPressed = Input.GetKeyDown(KeyCode.I);
+                fastFallPressed = Input.GetKey(KeyCode.K);
 
-                lightPressed = Input.GetKeyDown(KeyCode.N);
-                heavyPressed = Input.GetKeyDown(KeyCode.M);
+                lightPressed = Input.GetKeyDown(KeyCode.B);
+                heavyPressed = Input.GetKeyDown(KeyCode.H);
 
-                blockPressed = Input.GetKey(KeyCode.Comma);
+                blockPressed = Input.GetKey(KeyCode.Semicolon);
 
-                forwardKeyDown = Input.GetKeyDown(KeyCode.RightArrow);
-                backKeyDown = Input.GetKeyDown(KeyCode.LeftArrow);
+                forwardKeyDown = Input.GetKeyDown(KeyCode.L);
+                backKeyDown = Input.GetKeyDown(KeyCode.J);
             }
 
             FacingDirection inputDir = FacingDirection.Neutral;

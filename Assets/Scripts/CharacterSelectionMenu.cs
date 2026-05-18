@@ -7,7 +7,7 @@ public class CharacterSelectionMenu : MonoBehaviour
     [Header("Character Prefabs")]
     public GameObject[] characters;
     [Header("Character Names")]
-    public string[] characterNames; // Canviat de Sprite[] a string[]
+    public string[] characterNames; 
     [Header("Character IDs (DB)")]
     public int[] characterIDs;
     [Header("Displays")]
