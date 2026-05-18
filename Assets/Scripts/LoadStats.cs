@@ -9,12 +9,11 @@ public class LoadStats : MonoBehaviour
 {
     [Header("Characters")]
     public GameObject[] characters;
-    public Sprite[] characterNames;
     public int[] characterIDs;
 
     [Header("UI Display")]
     public Image characterImage;
-    public Image characterNameImage;
+    public TextMeshProUGUI charName;
 
     [Header("Stats Display")]
     public TextMeshProUGUI winsText;
@@ -59,7 +58,7 @@ public class LoadStats : MonoBehaviour
     void UpdateDisplay()
     {
         characterImage.sprite = characters[index].GetComponent<SpriteRenderer>().sprite;
-        characterNameImage.sprite = characterNames[index];
+        charName.text = characters[index].name; 
     }
 
     IEnumerator LoadStatsFromServer()

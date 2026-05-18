@@ -118,7 +118,7 @@ public class FighterStateMachine : MonoBehaviour
                 lightPressed = Input.GetKeyDown(KeyCode.J);
                 heavyPressed = Input.GetKeyDown(KeyCode.K);
 
-                blockPressed = Input.GetKey(KeyCode.B);
+                blockPressed = Input.GetKey(KeyCode.L);
 
                 forwardKeyDown = Input.GetKeyDown(KeyCode.D);
                 backKeyDown = Input.GetKeyDown(KeyCode.A);
@@ -144,7 +144,7 @@ public class FighterStateMachine : MonoBehaviour
                 lightPressed = Input.GetKeyDown(KeyCode.N);
                 heavyPressed = Input.GetKeyDown(KeyCode.M);
 
-                blockPressed = Input.GetKey(KeyCode.Period);
+                blockPressed = Input.GetKey(KeyCode.Comma);
 
                 forwardKeyDown = Input.GetKeyDown(KeyCode.RightArrow);
                 backKeyDown = Input.GetKeyDown(KeyCode.LeftArrow);
